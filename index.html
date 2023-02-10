@@ -2,11 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./nouislider/nouislider.css">
+  <link rel="stylesheet" href="./leaflet/leaflet.css" class="css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
-  <script defer src="js/main.js"></script>
+  <script defer src="./pristine/pristine.min.js" type="text/javascript"></script>
+  <script defer src="./nouislider/nouislider.min.js" type="text/javascript"></script>
+  <script defer src="./leaflet/leaflet.js" type="text/javascript"></script>
+  <script defer src="./js/main.js" type="module"></script>
 </head>
 <body>
 
@@ -72,27 +77,27 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off">
+      <form id="add-ad-form" action="https://25.javascript.pages.academy/keksobooking" class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
             <div class="ad-form-header__preview">
-              <img src="img/muffin-grey.svg" alt="Аватар пользователя" width="40" height="44">
+              <img id="avatar-preview" src="img/muffin-grey.svg" alt="Аватар пользователя" width="40" height="44">
             </div>
             <div class="ad-form__field">
-              <input type="file" id="avatar" name="avatar" class="ad-form-header__input visually-hidden">
+              <input type="file" id="avatar" name="avatar" accept="image/png, image/jpg, image/jpeg" class="ad-form-header__input visually-hidden">
               <label class="ad-form-header__drop-zone" for="avatar">Загрузить<br>фото...</label>
             </div>
             <p class="ad-form-header__info">Заполните все обязательные поля, назначьте цену, загрузите аватар и фото жилья. Придумайте интересное описание. Оно сделает объявление более живым и привлекательным. Получившееся объявление должно давать гостям полное представление о вашем жилье.</p>
           </div>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide">
+        <fieldset class="ad-form__element ad-form__element--wide ad-form__validate">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
-          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
+          <input required data-pristine-required-message="Обязательное поле" id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" readonly>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -104,12 +109,12 @@
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element">
+        <fieldset id="price-field" class="ad-form__element ad-form__validate">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000">
+          <input required data-pristine-required-message="Обязательное поле" id="price" name="price" type="number" placeholder="5000">
           <div class="ad-form__slider"></div>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--time">
+        <fieldset id="time" class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
           <select id="timein" name="timein">
             <option value="12:00" selected>После 12</option>
@@ -122,7 +127,7 @@
             <option value="14:00">Выезд до 14</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element">
+        <fieldset class="ad-form__element ad-form__validate">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
           <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
@@ -163,7 +168,7 @@
           <label class="ad-form__label">Фотография жилья</label>
           <div class="ad-form__photo-container">
             <div class="ad-form__upload">
-              <input type="file" id="images" name="images" class="ad-form__input visually-hidden">
+              <input type="file" id="images" name="images" accept="image/png, image/jpg, image/jpeg" class="ad-form__input visually-hidden">
               <label for="images" class="ad-form__drop-zone">Загрузить<br>фото...</label>
             </div>
             <div class="ad-form__photo"></div>
